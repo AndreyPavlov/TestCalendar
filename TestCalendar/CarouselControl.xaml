@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="TestCalendar.CarouselControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="prevButton" Grid.Column="0" Click="PrevButton_Click" Style="{StaticResource PrevNextButton}">
+            <Button.Content>
+                <Polygon Points="8,0 0,5, 8,10" Stroke="DarkGray" Fill="DarkGray" />
+            </Button.Content>
+        </Button>
+        <ListBox x:Name="CarouselListBox" Grid.Column="1" SelectionMode="Single" VirtualizingStackPanel.IsVirtualizing="False" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="CarouselListBox_SelectionChanged">
+            <ListBox.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
+            </ListBox.Resources>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="false">
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <Button x:Name="nextButton" Grid.Column="2" Click="NextButton_Click" Style="{StaticResource PrevNextButton}">
+            <Button.Content>
+                <Polygon Points="0,0 8,5, 0,10" Stroke="DarkGray" Fill="DarkGray" />
+            </Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

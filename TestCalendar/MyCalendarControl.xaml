@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="TestCalendar.MyCalendarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TestCalendar"
+             xmlns:wpfForm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms">
+    <UserControl.Resources>
+        <Style x:Key="CalendarStyle1" TargetType="{x:Type Calendar}">
+            <Setter Property="Foreground" Value="#FF333333"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <StackPanel x:Name="PART_Root" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Azure">
+                            <local:CarouselControl x:Name="MonthCarousel" Loaded="MonthCarousel_Loaded" Background="Azure"/>
+                            <local:CarouselControl x:Name="YearCarousel" Loaded="YearCarousel_Loaded"  Background="Azure"/>
+                            <CalendarItem x:Name="PART_CalendarItem" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Style="{DynamicResource calItemStyle}"/>
+                            <Grid Background="Azure" FlowDirection="LeftToRight">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Name="WeekButton" Content="Недeля" Click="WeekButton_Click" Style="{DynamicResource CalendarButton}"></Button>
+                                <Button Grid.Column="1" Name="MonthButton" Content="Месяц" Click="MonthButton_Click" Style="{DynamicResource CalendarButton}"></Button>
+                                <Button Grid.Column="3" Name="YearButton" Content="Год" Click="YearButton_Click" Style="{DynamicResource CalendarButton}"></Button>
+                            </Grid>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Expander x:Name="calendarExpander" IsExpanded="False" Style="{StaticResource ExpanderStyle1}" Expanded="CalendarExpander_Expanded">
+            <Expander.Header>
+                <WindowsFormsHost FlowDirection="LeftToRight">
+                    <wpfForm:MaskedTextBox x:Name="rangeOfDates" Mask="00/00/0000 - 00/00/0000" LostFocus="MaskedTextBox_LostFocus" TextChanged="RangeOfDates_TextChanged"/>
+                </WindowsFormsHost>
+            </Expander.Header>
+            <Calendar x:Name="MyCalendar" SelectionMode="MultipleRange" Style="{StaticResource CalendarStyle1}" FlowDirection="LeftToRight" SelectedDatesChanged="MyCalendar_SelectedDatesChanged"></Calendar>
+        </Expander>
+    </Grid>
+</UserControl>
